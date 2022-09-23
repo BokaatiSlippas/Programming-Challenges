@@ -1,9 +1,15 @@
 def main():
+  lower=int(input("Integer 1: "))
+  higher=int(input("Integer 2: "))
+  list=(calculations(lower,higher))
+  print(f"Palindrome numbers = {list[0]}")
+  print(f"Not lychrel numbers = {list[1]}")
+  print(f"Lychrel numbers = {list[2]}")
+
+def calculations(lower,higher):
   palindromes=0
   nonlychrel=0
   lychrel=0
-  lower=int(input("Integer 1: "))
-  higher=int(input("Integer 2: "))
   while lower<=higher:
     i=0
     done=False
@@ -36,6 +42,7 @@ def main():
       print(f"{lower} is probably lychrel")
     i=0
     lower+=1
+  return [palindromes,nonlychrel,lychrel]
   print(f"Palindrome numbers = {palindromes}")
   print(f"Not lychrel numbers = {nonlychrel}")
   print(f"Lychrel = {lychrel}")
