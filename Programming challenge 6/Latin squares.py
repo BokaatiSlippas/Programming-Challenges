@@ -1,6 +1,9 @@
 def main():
   order=int(input("Please input the order of square: "))
   topleft=int(input("Please input the top left number: "))
+  drawing(order,topleft)
+
+def drawing(order,topleft):
   final=""
   string=""
   for i in range(order):
