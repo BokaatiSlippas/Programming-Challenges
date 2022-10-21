@@ -1,0 +1,73 @@
+def word():
+    string="?"
+    while string.isalpha()==False:
+        try:
+            string = input("Enter the chosen word in capitals: ")
+            if string.isalpha()==True:
+                string = string.upper()
+                return string
+            else:
+                raise Expception("No numbers")
+        except:
+            string="?"
+            
+def vowelsplayer(word):#Word is BANANA
+    vowels="AEIOU"
+    vowelsubstringdict={}
+    for i in range(0,len(word)):
+        if word[i] in vowels:
+            temporary=word[i]
+            if temporary not in vowelsubstringdict:
+                vowelsubstringdict[temporary]=1
+            else:
+                vowelsubstringdict[temporary]+=1
+            for j in range((i+1),len(word)):
+                temporary+=word[j]
+                if temporary not in vowelsubstringdict:
+                    vowelsubstringdict[temporary]=1
+                else:
+                    vowelsubstringdict[temporary]+=1
+    vowelsubstringtuple=(sorted(vowelsubstringdict, key=vowelsubstringdict.get, reverse=True))
+    extra={}
+    for value in vowelsubstringtuple:
+        extra[value]=vowelsubstringdict[value]
+    return extra
+
+def consonantsplayer(word):
+    vowels="AEIOU"
+    consonantsubstringdict={}
+    for i in range(0,len(word)):
+        if word[i] not in vowels:
+            temporary=word[i]
+            if temporary not in consonantsubstringdict:
+                consonantsubstringdict[temporary]=1
+            else:
+                consonantsubstringdict[temporary]+=1
+            for j in range((i+1),len(word)):
+                temporary+=word[j]
+                if temporary not in consonantsubstringdict:
+                    consonantsubstringdict[temporary]=1
+                else:
+                    consonantsubstringdict[temporary]+=1
+    consonantsubstringtuple=(sorted(consonantsubstringdict, key=consonantsubstringdict.get,  reverse=True))
+    extra={}
+    for value in consonantsubstringtuple:
+        extra[value]=consonantsubstringdict[value]
+    return extra
+    
+
+def sending():
+    chosenword = word()
+    stuart = vowelsplayer(chosenword)
+    kevin = consonantsplayer(chosenword)
+    final=f"Words{('Score'):>22}\n"
+    final+=f"Stuart{('Stuart Score'):>25}\n"
+    centering=len(chosenword)
+    for substring in stuart:
+        final+=f"{(substring).center(centering)}{str((stuart[substring])).center(39)}     \n"
+    final+="\n\n\n\n\n"    
+    for substring in kevin:
+        final+=f"{(substring).center(centering)}{str((kevin[substring])).center(39)}     \n"
+    print(final)
+if __name__ == "__main__":
+    sending()
