@@ -1,0 +1,74 @@
+def length(isbn):
+    valid=False
+    if len(isbn)==10:
+        valid=True
+    return valid
+
+def numbers(isbn):
+    valid=False
+    tempstring=""
+    for num in isbn:
+        if num!="?":
+            tempstring+=num
+    if ((tempstring[-1]=="X") and (tempstring[:8]).isnumeric()) or (tempstring).isnumeric():
+        valid=True
+    return valid
+
+def summation(isbn):
+    total=0
+    i=0
+    for multiplier in range(10,0,-1):
+        if (isbn[i]).isnumeric():
+            total+=((int(isbn[i]))*multiplier)
+        elif isbn[i]=="X":
+            total+=10
+        elif isbn[i]=="?":
+            question=(multiplier*"?")
+        i+=1
+    return [total,question]
+
+def modulus(total,question,lastdigit):
+    done=False
+    if lastdigit=="?":
+        currentmultiple=0
+        while done==False:
+            currentmultiple+=11
+            if (total>(currentmultiple+11)) and (total<(currentmultiple+22)):
+                unknown=(currentmultiple+22)-total
+                done=True
+    else:
+        if lastdigit=="X":
+            lastdigit=10
+        else:
+            lastdigit=int(lastdigit)
+        currentmultiple=((int(total//11))*11)
+        multiplier=len(question)
+        arr=[]
+        for i in range(11):
+            arr.append(i*multiplier)
+        while done==False:
+            for value in arr:
+                if (total+value)>currentmultiple:
+                    currentmultiple+=11
+                elif (total+value)==currentmultiple:
+                    unknown=str(int(value/multiplier))
+                    done=True
+    return unknown
+
+def process():
+    isbn = input("Enter the ISBN: ")
+    while length(isbn)==False and numbers(isbn)==False:
+        isbn = input("Enter a valid ISBN: ")
+    lastdigit = isbn[-1]
+    arr = summation(isbn)#So that i dont have to do summation twice
+    total = arr[0] 
+    question = arr[1]
+    unknown = modulus(total, question, lastdigit)
+    if unknown==10:
+        unknown="X"
+    unknown=str(unknown)
+    print(unknown)
+
+  
+if __name__=="__main__":
+    process()
