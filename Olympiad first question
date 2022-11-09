@@ -1,0 +1,32 @@
+def char_to_ascii(letter):#char to ascii
+    return (ord(letter)-64)
+
+def ascii_to_char(ascii_value):#ascii to char
+  return chr(ascii_value)
+
+def decrypter(previous,current):
+  ascii_value = char_to_ascii(current)-char_to_ascii(previous)
+  if ascii_value>0:
+    letter=ascii_to_char(ascii_value+64)
+  elif ascii_value==0:
+    letter="Z"
+  else:
+    ascii_value=90+ascii_value
+    letter=ascii_to_char(ascii_value)
+  return letter
+  
+def process(ciphertext):
+  list=[]
+  list[:0]=ciphertext
+  final=ciphertext[0]
+  for i in range(1,len(ciphertext)):
+    current=list[i]
+    previous=list[i-1]
+    temp=decrypter(previous,current)
+    final+=temp
+    list[i-1]=temp
+  print(final)
+
+if __name__=="__main__":
+  ciphertext=input("Enter the ciphertext: ")
+  process(ciphertext)
